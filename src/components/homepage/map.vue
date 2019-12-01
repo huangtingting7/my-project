@@ -1,55 +1,42 @@
 <template>
   <div class="wrapper">
-    <!-- 首页左侧 -->
-    <div class="map">
+    <div class="title titletip">
+      <h3 class="cpname">南京远控信息科技有限公司</h3>
       <h2>设备监控平台</h2>
-      <ul class="word">
-        <li>
-          <span>欧洲</span>
-          <div class="europe">
-            <div></div>
-          </div>
-          <span>共10台</span>
-        </li>
-        <li>
-          <span>美洲</span>
-          <div class="usa">
-            <div></div>
-          </div>
-          <span>共8台</span>
-        </li>
-      </ul>
-      <!-- 中国地图 -->
-      <div id="myChartChina" :style="{width: '100%', height: '500px'}"></div>
+      <span @click="back">返回上一级</span>
     </div>
-    <!-- 首页右侧 -->
-    <div class="echartinfo">
-      <ul>
-        <li class="title">
-          <div>区域</div>
-          <div>机床数量</div>
-          <div>实时报警占比</div>
-          <div>实时加工占比</div>
-        </li>
-        <li v-for="(item,index) in infolist" :key="index">
-          <div class="font">{{item.area}}</div>
-          <div class="font">{{item.number}}台</div>
-          <!-- <el-progress
-            class="progress warning"
-            :text-inside="true"
-            :stroke-width="12"
-            :percentage="item.warning"
-            :style="{width:'18%'}"
-          ></el-progress>
-          <el-progress
-            class="progress"
-            :text-inside="true"
-            :stroke-width="12"
-            :percentage="item.working"
-            :style="{width:'18%'}"
-          ></el-progress> -->
-        </li>
-      </ul>
+    <div class="content">
+      <!-- 首页左侧 -->
+      <div class="leftcontent"></div>
+      <div class="map">
+        <!-- 中国地图 -->
+        <div id="myChartChina" :style="{width: '100%', height: '500px'}"
+        ></div>
+        <div class="infolist">
+          <ul>
+          <li class="title">
+            <div>序号</div>
+            <div>报警时间</div>
+            <div>机床型号</div>
+            <div>机床序列号</div>
+            <div>客户名称</div>
+            <div>报警编号</div>
+          </li>
+          <li v-for="(item,index) in infolist" :key="index">
+            <div>{{item.index}}</div>
+            <div>{{item.warningtime}}</div>
+            <div>{{item.jcxh}}</div>
+            <div>{{item.xlh}}</div>
+            <div>{{item.name}}</div>
+            <div>{{item.warncode}}</div>
+          </li>
+        </ul>
+        </div>
+      </div>
+      <!-- 首页右侧 -->
+      <div class="echartinfo">
+        
+      </div>
     </div>
   </div>
 </template>
@@ -60,11 +47,11 @@ export default {
   data() {
     return {
       infolist: [
-        { area: "宁庆数控", number: "12", warning: 24, working: 16 },
-        { area: "华东", number: "6", warning: 54, working: 56 },
-        { area: "华北", number: "6", warning: 90, working: 32 },
-        { area: "西南", number: "6", warning: 45, working: 14 },
-        { area: "西北", number: "6", warning: 90, working: 25 }
+        { index:1,name: "客户1", jcxh: "VCER5512", warningtime: "2019.09.20", xlh: "12638055",warncode:"7rg6566"},
+        { index:2,name: "客户2", jcxh: "VC325", warningtime: "2019.09.20", xlh: "12638055",warncode:"7rg6566" },
+        { index:3,name: "客户3", jcxh: "VJWE32Y", warningtime: "2019.09.20", xlh: "51684155",warncode:"7rg6566" },
+        { index:4,name: "客户4", jcxh: "NDFW4Y", warningtime: "2019.09.20", xlh: "12638055" ,warncode:"7rg6566"},
+        { index:5,name: "客户5", jcxh: "JRS5555", warningtime: "2019.09.20", xlh: "12638055",warncode:"7rg6566" }
       ]
     };
   },
@@ -173,6 +160,9 @@ export default {
         resizeMyChartContainer();
         myChartChina.resize();
       };
+    },
+    back(){
+      this.$router.push("index")
     }
   }
 };
@@ -186,11 +176,41 @@ h2 {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
+  background: -webkit-linear-gradient(45deg, #263e7d, #278bc7, #263e7d);
+  background: linear-gradient(45deg, #263e7d, #278bc7, #263e7d);
+  color: white;
+}
+.titletip {
+  height: 5%;
+  min-height: 80px;
+  width: 98%;
+  border-bottom: 2px solid #28b2f0;
+  margin: 0 auto;
+  position: relative;
+}
+.titletip>.cpname{
+  position: absolute;
+  left: 4px;
+  bottom: 0.5rem;
+  font-weight: 300;
+}
+.titletip>span{
+  position: absolute;
+  right: 4px;
+  bottom: 0.5rem;
+  cursor: pointer;
+}
+.content {
+  width: 100%;
+  height: 98%;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #eff4f7;
-  padding: 1em 2em 3em 2em;
+}
+.content > div {
+  height: 98%;
 }
 .mapDiv {
   width: 50%;
@@ -216,36 +236,51 @@ h2 {
 }
 .wrapper > div {
   padding-top: 2em;
-  background-color: #ffffff;
-  border-radius: 12px;
 }
 .map {
-  width: 56%;
-  height: 100%;
+  width: 42%;
+  height: 90%;
+  border-right: 2px solid #28b2f0;
+}
+.leftcontent {
+  width: 29%;
+  height: 90%;
+  padding-top: 2em;
+  border-right: 2px solid #28b2f0;
 }
 .echartinfo {
-  width: 43%;
-  height: 100%;
+  width: 29%;
+  height: 90%;
   padding-top: 2em;
 }
-.echartinfo > ul {
+.infolist{
+  margin-top: 4rem;
+  width: 100%;
+  height: auto;
+}
+.infolist > ul {
   width: 86%;
   height: auto;
   margin: 0 auto;
 }
-.echartinfo > ul > li {
+.infolist > ul > li {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1em;
+  border-bottom: 1px solid #1c92b6;
 }
-.echartinfo > ul > li > div {
+.infolist > ul > li > div {
   width: 25%;
-  text-align: left;
+  text-align: center;
 }
 .echartinfo > ul > li > .font {
   padding-left: 1em;
+}
+.infolist .title{
+  background-color: #3364c6;
+  border: 0;
 }
 .title {
   font-size: 16px;
