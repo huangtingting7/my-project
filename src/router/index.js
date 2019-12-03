@@ -4,6 +4,7 @@ import login from '@/components/login/login'
 import register from "@/components/login/register"
 import index from "@/components/view/index"
 import map from "@/components/homepage/map"
+import main from "@/components/homepage/main"
 Vue.use(Router)
 
 export default new Router({
@@ -24,5 +25,9 @@ export default new Router({
         path: '/map',
         name: 'map',
         component: map,
+    }, {
+        path: '/main',
+        name: 'main',
+        component: main,
     }]
 })
