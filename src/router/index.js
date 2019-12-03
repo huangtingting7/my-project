@@ -4,11 +4,15 @@ import login from '@/components/login/login'
 import register from "@/components/login/register"
 import index from "@/components/view/index"
 import map from "@/components/homepage/map"
+<<<<<<< HEAD
 import meua from "@/components/meualist/meua"
 import equipstatus from "@/components/meualist/equipstatus"
 import warning from "@/components/meualist/warning"
 import information from "@/components/meualist/information"
 
+=======
+import main from "@/components/homepage/main"
+>>>>>>> b91d337e61168f7ecc39a6da8d908bcdeeacfc8c
 Vue.use(Router)
 
 export default new Router({
@@ -30,6 +34,7 @@ export default new Router({
         name: 'map',
         component: map,
     }, {
+<<<<<<< HEAD
         path: '/meua',
         name: 'meua',
         component: meua,
@@ -43,5 +48,10 @@ export default new Router({
             path: '/information',
             component: information
         }]
+=======
+        path: '/main',
+        name: 'main',
+        component: main,
+>>>>>>> b91d337e61168f7ecc39a6da8d908bcdeeacfc8c
     }]
 })
