@@ -8,10 +8,18 @@ import meua from "@/components/meualist/meua"
 import equipstatus from "@/components/meualist/equipstatus"
 import warning from "@/components/meualist/warning"
 import information from "@/components/meualist/information"
+import debug from "@/components/meualist/debug"
+import management from "@/components/meualist/management"
+import history from "@/components/meualist/history"
+import faraway from "@/components/meualist/faraway"
 import main from "@/components/homepage/main"
 
-Vue.use(Router)
 
+Vue.use(Router)
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err);
+}
 export default new Router({
     mode: 'history',
     routes: [{
@@ -47,6 +55,18 @@ export default new Router({
         }, {
             path: '/information',
             component: information
+        }, {
+            path: '/debugging',
+            component: debug
+        }, {
+            path: '/management',
+            component: management
+        }, {
+            path: '/history',
+            component: history
+        }, {
+            path: '/faraway',
+            component: faraway
         }]
     }]
 })

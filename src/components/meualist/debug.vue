@@ -1,6 +1,6 @@
 <template>
     <div>
-        设备信息
+        设备运维
     </div>
 </template>
 

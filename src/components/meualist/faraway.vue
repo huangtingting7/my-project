@@ -1,6 +1,6 @@
 <template>
     <div>
-        设备信息
+        远程操作
     </div>
 </template>
 

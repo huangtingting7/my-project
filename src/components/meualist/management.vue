@@ -1,6 +1,6 @@
 <template>
     <div>
-        设备信息
+        客户管理
     </div>
 </template>
 

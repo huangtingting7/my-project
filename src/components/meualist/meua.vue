@@ -12,35 +12,35 @@
         <span>NINGQING</span>
         <span style="font-size:4px">®</span>
       </div>
-      <MenuItem name="/index" :class="index?'red':''">
-        首页
-      </MenuItem>
+      <MenuItem name="/index" :class="index?'red':''">首页</MenuItem>
       <MenuItem name="/equipstatus" :class="equipstatus?'red':''">
-        设备状态
+        <span>设备状态</span>
       </MenuItem>
       <MenuItem name="/warning" :class="warning?'red':''">
-        设备报警
+        <span>设备报警</span>
       </MenuItem>
       <MenuItem name="/information" :class="information?'red':''">
-        设备信息
+        <span>设备信息</span>
       </MenuItem>
       <MenuItem name="/debugging" :class="debugging?'red':''">
-        设备运维
+        <span>设备运维</span>
       </MenuItem>
       <MenuItem name="/management" :class="management?'red':''">
-        客户管理
+        <span>客户管理</span>
       </MenuItem>
       <MenuItem name="/history" :class="history?'red':''">
-        维修记录
+        <span>维修记录</span>
       </MenuItem>
-       <MenuItem name="/faraway" :class="faraway?'red':''">
-        远程操作
+      <MenuItem name="/faraway" :class="faraway?'red':''">
+        <span>远程操作</span>
       </MenuItem>
       <Submenu name="3">
         <template slot="title">
-          你好，xxx
+          <span>你好，xxx</span>
         </template>
-        <MenuItem name="exit">退出</MenuItem>
+        <MenuItem name="exit">
+          <span>退出</span>
+        </MenuItem>
       </Submenu>
     </Menu>
     <div class="viewpage">
@@ -55,72 +55,78 @@ export default {
   data() {
     return {
       theme1: "primary",
-      index:false,
-      equipstatus:true,
-      warning:false,
-      information:false,
-      debugging:false,
-      management:false,
-      history:false,
-      faraway:false,
+      index: false,
+      equipstatus: true,
+      warning: false,
+      information: false,
+      debugging: false,
+      management: false,
+      history: false,
+      faraway: false
     };
   },
   methods: {
-    allfalse(){
-      this.index=false,
-      this.equipstatus=false,
-      this.warning=false,
-      this.information=false,
-      this.debugging=false,
-      this.management=false,
-      this.history=false,
-      this.faraway=false
+    allfalse() {
+      (this.index = false),
+        (this.equipstatus = false),
+        (this.warning = false),
+        (this.information = false),
+        (this.debugging = false),
+        (this.management = false),
+        (this.history = false),
+        (this.faraway = false);
     },
     selectMenu(name) {
-      if(name=="/index"){
-        this.allfalse()
-        this.index=true
+      if (name == "/index") {
+        this.allfalse();
+        this.index = true;
       }
-      if(name=="/equipstatus"){
-        this.allfalse()
-        this.equipstatus=true
+      if (name == "/equipstatus") {
+        this.allfalse();
+        this.equipstatus = true;
       }
-      if(name=="/warning"){
-        this.allfalse()
-        this.warning=true
+      if (name == "/warning") {
+        this.allfalse();
+        this.warning = true;
       }
-      if(name=="/information"){
-        this.allfalse()
-        this.information=true
+      if (name == "/information") {
+        this.allfalse();
+        this.information = true;
       }
-      if(name=="/debugging"){
-        this.allfalse()
-        this.debugging=true
+      if (name == "/debugging") {
+        this.allfalse();
+        this.debugging = true;
       }
-      if(name=="/management"){
-        this.allfalse()
-        this.management=true
+      if (name == "/management") {
+        this.allfalse();
+        this.management = true;
       }
-      if(name=="/history"){
-        this.allfalse()
-        this.history=true
+      if (name == "/history") {
+        this.allfalse();
+        this.history = true;
       }
-      if(name=="/faraway"){
-        this.allfalse()
-        this.faraway=true
+      if (name == "/faraway") {
+        this.allfalse();
+        this.faraway = true;
       }
 
       this.$router.push(name);
     }
   },
   mounted() {
-    this.$router.push({ path: "/equipstatus" });
+    this.$router.push("/equipstatus");
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+span {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .wrapper {
   width: 100vw;
   height: 100vh;
@@ -135,7 +141,7 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
-.red{
+.red {
   background-color: #e93223;
 }
 .logo {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        设备信息
+        维修记录
     </div>
 </template>
 
