@@ -8,6 +8,7 @@ import meua from "@/components/meualist/meua"
 import equipstatus from "@/components/meualist/equipstatus"
 import warning from "@/components/meualist/warning"
 import information from "@/components/meualist/information"
+import main from "@/components/homepage/main"
 
 Vue.use(Router)
 
@@ -29,6 +30,10 @@ export default new Router({
         path: '/map',
         name: 'map',
         component: map,
+    }, {
+        path: '/main',
+        name: 'main',
+        component: main,
     }, {
         path: '/meua',
         name: 'meua',
