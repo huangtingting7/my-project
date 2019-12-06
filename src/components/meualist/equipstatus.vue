@@ -14,7 +14,7 @@
           :model="data"
           default-tree-node-name="new node"
           default-leaf-node-name="new leaf"
-          v-bind:default-expanded="true"
+          v-bind:default-expanded="false"
         >
           <!-- <span class="icon" slot="addTreeNode">新增</span> -->
           <!-- <span class="icon" slot="addLeafNode">新增文件</span> -->
