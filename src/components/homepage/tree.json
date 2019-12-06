@@ -57,7 +57,7 @@
           { "id": 21111, "pid": 2111, "name": "某某工厂1", "open": true },
         { "id": 2112, "pid": 211, "name": "某某客户2", "open": true },
       { "id": 212, "pid": 21, "name": "湖北省", "open": true },
-      { "id": 213, "pid": 21, "name": "福建省省", "open": true },
+      { "id": 213, "pid": 21, "name": "福建省", "open": true },
     { "id": 22, "pid": 2, "name": "东北办事处", "open": true },
     { "id": 23, "pid": 2, "name": "华东办事处", "open": true }
   ]
