@@ -477,10 +477,15 @@ const dataQueue = [bigData.data, simpleData];
   }
 </script>
  
-<style lang="less" rel="stylesheet/less" scoped>
+<style lang="less" scoped>
   .icon {
     &:hover {
       cursor: pointer;
     }
+  }
+  .tree_extra_btn{
+    display: inline-block;
+    padding: 0 3px;
+    color: red;
   }
 </style>
