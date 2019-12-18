@@ -29,7 +29,7 @@
       <!-- 工厂表单 -->
       <factory v-show="factory"></factory>
       <!-- 客户表单 -->
-      <statustable v-show="statustable"></statustable>
+      <statustable v-show="statustable" ref="statustable"></statustable>
     </div>
   </div>
 </template>
@@ -37,6 +37,10 @@
 import { VueTreeList, Tree, TreeNode } from "vue-tree-list";
 import statustable from "./statustable";
 import factory from "./factory";
+import {get} from "@/apis/restUtils";
+
+const customerModel = () => import("./customerInfoModal.vue");
+
 export default {
   components: {
     VueTreeList,
@@ -345,6 +349,28 @@ export default {
     // 添加节点	树节点
     onAddNode(params) {
       console.log(params, "onAddNode");
+      this.$Modal.confirm({
+          title: '客户列表',
+          render: (h) => {
+            return h(customerModel, {
+              ref: 'customerModel',
+              on:{
+                showInfo:(name) =>{
+                  alert(" parent: " + name);
+                  // change nodename
+                }
+              }
+            })
+          },
+          width: 600,
+          closable: false,
+          okText: "确定",
+          cancelText: "取消",
+          loading: true,
+          onOk() {
+            
+          }
+        });
     },
     // tree节点点击事件
     onClick(params) {
@@ -353,8 +379,38 @@ export default {
 
       // }
       this.treeParam = params;
+      get("/organization/customer/getFirstCustomer", reponse => {
+        var content = this.$refs.statustable.content;
+        reponse.data.forEach(element => {
+          var machine = element.machineBean;
+          var machineStatus = element.machineStatus;
+          var contentElement = {};
+          contentElement.name = machine.description;
+          contentElement.model = machine.model;
+          contentElement.serial = machine.sn;
+          contentElement.CNC = machine.plcType;
+          contentElement.productionDate = machine.dateOfProduction
+          contentElement.warning = "";
+          machineStatus.alarms.forEach(element =>{
+            contentElement.warning =  contentElement.warning + "告警码: " + element + " ";
+        });
+        contentElement.status = "unknown";
+        if(contentElement.warning != ""){
+          contentElement.status = "故障";  
+        }else{
+          switch(machineStatus.WorkState){
+            case 0:
+              contentElement.status = "加工";
+              break;
+            case 1:
+              contentElement.status = "停机";
+              break;
+          }
+        }   
+        content.push(contentElement); 
+        });
+      });  
     },
-
     addNode() {
       var node = new TreeNode({ name: "new node", isLeaf: false });
       if (!this.data.children) this.data.children = [];
