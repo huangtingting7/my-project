@@ -1,17 +1,17 @@
 <template>
-  <div class="wrapper">
+  <div class="wrappers">
     <div class="top">
       <el-button type="primary" icon="el-icon-arrow-left" @click="back">上一层</el-button>
       <span>时间作业状态</span>
       <div>
-        <el-date-picker
+        <!-- <el-date-picker
           :style="{width:'240px'}"
           v-model="dateChoose"
           type="daterange"
           range-separator="——"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-        ></el-date-picker>
+        ></el-date-picker>-->
       </div>
     </div>
     <div class="currentdata">
@@ -64,7 +64,7 @@
                   <div class="colorline">
                     <div>
                       <div class="process"></div>
-                      <span>加工：0秒</span>
+                      <span>加工：{{time}}</span>
                     </div>
                     <div>
                       <div class="breakdown"></div>
@@ -75,12 +75,8 @@
                       <span>停机：0秒</span>
                     </div>
                     <div>
-                      <div class="off"></div>
-                      <span>关机：20时05分13秒</span>
-                    </div>
-                    <div>
                       <div class="interrupt"></div>
-                      <span>断开4时</span>
+                      <span>未连接</span>
                     </div>
                   </div>
                 </div>
@@ -94,7 +90,7 @@
                   </div>
                   <div>
                     <span>加工占比</span>
-                    <i-circle :percent="50" :size="80">
+                    <i-circle :percent="50" stroke-color="#089642" :size="80">
                       <span class="demo-Circle-inner" style="font-size:16px">50%</span>
                     </i-circle>
                   </div>
@@ -112,14 +108,14 @@
           <div id="myChartBottom" :style="{width: '100%', height: '100%'}"></div>
         </div>
         <div class="pieshow">
-          <el-date-picker
-            :style="{width:'240px'}"
-            v-model="dateChoose"
+          <DatePicker
             type="daterange"
-            range-separator="——"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          ></el-date-picker>
+            :style="{width:'240px'}"
+            placement="bottom-end"
+            placeholder="请选择开始日期——结束日期"
+            style="width: 200px;margin-bottom:1em;"
+            @on-change="cahngedate1"
+          ></DatePicker>
           <div id="myChart2" :style="{width: '100%', height: '100%'}"></div>
         </div>
       </div>
@@ -129,14 +125,14 @@
           <div id="myChartBottom3" :style="{width: '100%', height: '100%'}"></div>
         </div>
         <div class="pieshow">
-          <el-date-picker
-            :style="{width:'240px'}"
-            v-model="dateChoose"
+          <DatePicker
             type="daterange"
-            range-separator="——"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          ></el-date-picker>
+            :style="{width:'240px'}"
+            placement="bottom-end"
+            placeholder="请选择开始日期——结束日期"
+            style="width: 200px;margin-bottom:1em;"
+            @on-change="cahngedate2"
+          ></DatePicker>
           <div id="myChart3" :style="{width: '100%', height: '100%'}"></div>
         </div>
       </div>
@@ -149,7 +145,9 @@ export default {
   props: ["statusinfo"],
   data() {
     return {
-      dateChoose: "",
+      time: "20秒",
+      dateChoose2: "",
+      dateChoose1: "",
       currentdate: "",
       currentPage: 1, //分页当前页数,
       statuslist: [
@@ -158,20 +156,27 @@ export default {
             { percent: "18%", status: 1 },
             { percent: "12%", status: 2 },
             { percent: "34%", status: 3 },
-            { percent: "16%", status: 4 },
-            { percent: "20%", status: 5 }
+            { percent: "36%", status: 5 }
           ],
           name: "ZHUGANGZHI-1"
         },
         {
           list: [
             { percent: "10%", status: 2 },
-            { percent: "10%", status: 3 },
+            { percent: "28%", status: 3 },
             { percent: "12%", status: 1 },
-            { percent: "18%", status: 4 },
             { percent: "50%", status: 5 }
           ],
           name: "ZHUGANGZHI-2"
+        },
+        {
+          list: [
+            { percent: "10%", status: 2 },
+            { percent: "28%", status: 3 },
+            { percent: "12%", status: 1 },
+            { percent: "50%", status: 5 }
+          ],
+          name: "ZHUGANGZHI-3"
         }
       ] //状态数组status状态，percent百分比
     };
@@ -194,8 +199,15 @@ export default {
     },
     //日期改变
     changedate(e) {
-      console.log(e);
       this.currentdate = e;
+    },
+    cahngedate1(e) {
+      this.dateChoose1 = e;
+      console.log("第一个pie状图上方时间选择", this.dateChoose1);
+    },
+    cahngedate2(e) {
+      this.dateChoose2 = e;
+      console.log("第二个pie状图上方时间选择", this.dateChoose2);
     },
     getBottom() {
       // 基于准备好的dom，初始化echarts实例
@@ -228,10 +240,21 @@ export default {
               "2019-10-05",
               "2019-10-06",
               "2019-10-07",
-              "2019-10-08"
+              "2019-10-08",
+              "2019-10-09",
+              "2019-10-10",
+              "2019-10-11",
+              "2019-10-12",
+              "2019-10-13",
+              "2019-10-14",
+              "2019-10-15"
             ],
             axisTick: {
               alignWithLabel: true
+            },
+            axisLabel: {
+              interval: 0,
+              rotate: 40
             }
           }
         ],
@@ -245,7 +268,7 @@ export default {
             name: "百分比",
             type: "bar",
             barWidth: "30%",
-            data: [10, 52, 20, 34, 39, 30, 22, 68],
+            data: [10, 52, 20, 34, 39, 30, 22, 68, 32, 15, 59, 64, 21, 54, 89],
             itemStyle: {
               normal: {
                 color: "#009a44"
@@ -295,7 +318,8 @@ export default {
               { value: 310, name: "故障" },
               { value: 234, name: "停机" },
               { value: 135, name: "未连接" }
-            ]
+            ],
+            color: ["#089642", "#fb0200", "#fffc02", "#808080"]
           }
         ]
       };
@@ -334,10 +358,21 @@ export default {
               "2019-10-05",
               "2019-10-06",
               "2019-10-07",
-              "2019-10-08"
+              "2019-10-08",
+              "2019-10-09",
+              "2019-10-10",
+              "2019-10-11",
+              "2019-10-12",
+              "2019-10-13",
+              "2019-10-14",
+              "2019-10-15"
             ],
             axisTick: {
               alignWithLabel: true
+            },
+            axisLabel: {
+              interval: 0,
+              rotate: 40
             }
           }
         ],
@@ -351,7 +386,7 @@ export default {
             name: "百分比",
             type: "bar",
             barWidth: "30%",
-            data: [10, 52, 20, 34, 39, 30, 22, 68],
+            data: [10, 52, 20, 34, 39, 30, 22, 68, 32, 15, 59, 64, 21, 54, 89],
             itemStyle: {
               normal: {
                 color: "#009a44"
@@ -401,7 +436,8 @@ export default {
               { value: 310, name: "故障" },
               { value: 234, name: "停机" },
               { value: 135, name: "未连接" }
-            ]
+            ],
+            color: ["#089642", "#fb0200", "#fffc02", "#808080"]
           }
         ]
       };
@@ -424,38 +460,38 @@ export default {
 };
 </script>
 <style scoped>
-.wrapper {
+.wrappers {
   width: 100%;
   height: 100%;
   min-width: 1240px;
-  min-height: 860px;
+  /* min-height: 860px; */
   border-radius: 3px;
   background-color: white;
-  margin: 1% auto;
   position: relative;
   overflow: hidden;
-  overflow-y: scroll;
 }
 .wrapper::-webkit-scrollbar {
   display: none;
 }
 .chartsshow {
   width: 100%;
-  height: 45%;
+  height: 40%;
   position: absolute;
   bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 0 1em;
+  overflow: auto;
 }
 .chartsshow > div {
   width: 100%;
-  height: 49%;
+  min-height: 190px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2em;
 }
 .pieshow {
   width: 20%;
@@ -484,6 +520,7 @@ export default {
   position: absolute;
   top: 100px;
   border-bottom: 2px solid gray;
+  overflow: auto;
 }
 .content > div {
   width: 100%;
@@ -510,6 +547,7 @@ export default {
   display: flex;
   flex-direction: row;
   padding: 1em 1em;
+  margin-bottom: 1.5em;
 }
 /* 列表左侧 */
 .listleft {
@@ -528,11 +566,12 @@ export default {
   flex-direction: row;
 }
 .colorline > div {
-  width: 20%;
+  width: 25%;
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-top: 4em;
+  justify-content: center;
 }
 /* 列表右侧 */
 .listright {
@@ -555,7 +594,6 @@ export default {
 .process,
 .breakdown,
 .stop,
-.off,
 .interrupt {
   width: 64px;
   height: 12px;
@@ -569,9 +607,7 @@ export default {
 .stop {
   background-color: #fffc02;
 }
-.off {
-  background-color: #050001;
-}
+
 .interrupt {
   background-color: #808080;
 }
@@ -615,7 +651,7 @@ export default {
 .currentdata {
   display: flex;
   flex-direction: row;
-  width: 210px;
+  width: 240px;
   justify-content: space-between;
   margin: 0 auto;
   position: absolute;
@@ -623,7 +659,7 @@ export default {
   left: 0;
   right: 0;
   margin: auto;
-  transform: translateX(-6em);
+  transform: translateX(6em);
 }
 .currentdata > span {
   cursor: pointer;
