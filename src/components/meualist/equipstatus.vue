@@ -30,6 +30,7 @@
       <factory v-show="factory"></factory>
       <!-- 客户表单 -->
       <statustable v-show="statustable" ref="statustable"></statustable>
+      <detailChart v-show="showDetail"></detailChart>
     </div>
   </div>
 </template>
@@ -37,6 +38,7 @@
 import { VueTreeList, Tree, TreeNode } from "vue-tree-list";
 import statustable from "./statustable";
 import factory from "./factory";
+import detailChart from "./detailChart";
 import {get} from "@/apis/restUtils";
 
 const customerModel = () => import("./customerInfoModal.vue");
@@ -45,11 +47,13 @@ export default {
   components: {
     VueTreeList,
     statustable,
+    detailChart,
     factory
   },
   data() {
     return {
       factory: false,
+      showDetail: false,
       statustable: true,
       dateChoose: "", //table选择开始结束时间
       currentPage: 1, //分页当前页数,
@@ -378,6 +382,9 @@ export default {
       // if(params.name.substring(0,2)=="机床"){
 
       // }
+      this.factory = false
+      this.statustable = false
+      this.showDetail= true
       this.treeParam = params;
       get("/organization/customer/getFirstCustomer", reponse => {
         this.$refs.statustable.content = reponse.data;
