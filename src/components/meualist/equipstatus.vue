@@ -30,7 +30,7 @@
       <factory v-show="factory"></factory>
       <!-- 客户表单 -->
       <statustable v-show="statustable" ref="statustable"></statustable>
-      <detailChart v-show="showDetail"></detailChart>
+      <detailChart v-show="showDetail" ref="showDetail"></detailChart>
     </div>
   </div>
 </template>
@@ -382,7 +382,6 @@ export default {
       // if(params.name.substring(0,2)=="机床"){
 
       // }
-      this.factory = false
       this.statustable = false
       this.showDetail= true
       this.treeParam = params;
