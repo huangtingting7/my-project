@@ -1,9 +1,9 @@
 <template>
   <div class="content">
-    <div class="jiantou">
+    <!-- <div class="jiantou">
       <span class="top"></span>
       <span class="line"></span>
-    </div>
+    </div> -->
     <!-- <el-input class="input" @input="changeScaleplate" v-model="msg" placeholder type="number"></el-input> -->
     <section id="zhizi"></section>
   </div>
@@ -157,8 +157,10 @@ export default {
   position: relative;
 }
 .bgColor {
-  background-color: red;
+  height: 50px;
+  width: 15px;
   color: red;
+  border-left: 1px solid red;
 }
 .input {
   width: 200px;

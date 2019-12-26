@@ -33,8 +33,10 @@ export default {
   height: 10px;
 }
 .bgColor {
-  background-color: red;
+  height: 50px;
+  width: 15px;
   color: red;
+  border-left: 1px solid red;
 }
 .tishi {
   position: absolute;

@@ -31,8 +31,9 @@
             </div>
             <div class="title unread">
                 当前给进
-                <div>
+                <div style="width:600px;height:600px;">
                     <div style="text-align: right;">1805mm/min</div>
+                    <!-- <div id="myChart5" style="width:600px;height:500px;"></div> -->
                     <ruleLine :number="1805"/>
                 </div>
             </div>
@@ -63,8 +64,8 @@
 import ruleLine from "./ruleLine";
 export default {
     components: {
-    ruleLine
-  },
+        ruleLine
+    },
     data () {
       return {
           tableList: [
@@ -125,6 +126,7 @@ export default {
     this.getRightBottom2()
     this.getRightBottom3()
     this.getRightBottom4()
+    this.getRightBottom5()
   },
     methods: {
         getRightBottom() {
@@ -378,6 +380,70 @@ export default {
                 ]
             };
             let myChart = this.$echarts.init(document.getElementById("myChart4"));
+            // // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        },
+        getRightBottom5() {
+            let myChart = this.$echarts.init(document.getElementById("myChart5"));
+            let option = {
+                yAxis: [{
+                    type: 'category',
+                    data: [''],
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    }
+                }, {
+                    type: 'category',
+                    data: [''],
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    }
+                }],
+                xAxis: {
+                    type: 'value',
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    }
+                },
+                tooltip: {
+                    formatter: '{a}: {c}'
+                },
+                grid: {
+                    containLabel: true,
+                    width: "99%",
+                    height: 120,
+                    left: 0,
+                    top: 50
+                },
+                series: [{
+                    name: "差",
+                    splitNumber: 8,
+                    data: [80000],
+                    type: 'bar',
+                    yAxisIndex: 0,
+                    stack: "range",
+                    silent: true,
+                    barWidth: 50,
+                    color: "#F5B4AE"
+                }, {
+                    name: "实际值",
+                    data: [18060],
+                    type: 'bar',
+                    yAxisIndex: 1,
+                    barWidth: 50,
+                    color: "#434778",
+                    z: 3,
+                }]
+            };
             // // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
         },
