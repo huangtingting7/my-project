@@ -8,11 +8,11 @@
         <div>
           <template>
             <table class="table-a" width="500" border="1" cellspacing="0" cellpadding="5">
-              <tr v-for="item in tableList" :key="item.x">
+              <tr v-for="(item, i) in tableList" :key="i">
                 <td>{{ item.x }}</td>
                 <td>{{item.number}}</td>
                 <td>
-                  <button v-if="item.number" @click="handleSubmit(item)" class="bottonStyle">隐藏轴</button>
+                  <button v-if="item.number" @click="editName(item,i)" class="bottonStyle">编辑</button>
                 </td>
               </tr>
             </table>
@@ -24,13 +24,14 @@
         <div>
           <template>
             <table class="table-b" width="500" border="0" cellspacing="10" cellpadding="5">
-              <tr v-for="item in tableList" :key="item.x">
+              <tr v-for="(item,i) in tableList" :key="i" :class="item.showFlag ? '' : 'backopt'">
                 <td style="width:20px;">{{ item.name }}</td>
                 <td>
                   <Progress :percent="item.percent" hide-info :stroke-width="20"></Progress>
                 </td>
                 <td style="width:45px;">
-                  <button @click="handleSubmit(item)" class="bottonStyle">编辑</button>
+                  <button v-if="item.showFlag" @click="handleSubmit(item,i)" class="bottonStyle">显示</button>
+                  <button v-if="!item.showFlag" @click="handleSubmit(item,i)" class="bottonStyle">隐藏</button>
                 </td>
               </tr>
             </table>
@@ -68,6 +69,23 @@
         </div>
       </div>
     </div>
+    <el-dialog
+  title="编辑"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  <div>
+    <el-input
+      placeholder="请输入内容"
+      v-model="itemParam.x"
+      clearable>
+  </el-input>
+  </div>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 <script>
@@ -79,54 +97,64 @@ export default {
   props: ["detailinfo"],
   data() {
     return {
+      itemParam: {},
+      dialogVisible: false,
       tableList: [
         {
           x: "X坐标",
           number: "100000.0000",
           name: "X",
-          percent: 50
+          percent: 50,
+          showFlag: true
         },
         {
           x: "Y坐标",
           number: "100000.0000",
           name: "Y",
-          percent: 30
+          percent: 30,
+          showFlag: true
         },
         {
           x: "Z坐标",
           number: "100000.0000",
           name: "Z",
-          percent: 90
+          percent: 90,
+          showFlag: true
         },
         {
           x: "A坐标",
           number: "100000.0000",
           name: "A",
-          percent: 60
+          percent: 60,
+          showFlag: true
         },
         {
           x: "B坐标",
           number: null,
           name: "B",
-          percent: 80
+          percent: 80,
+          showFlag: true
         },
         {
           x: "C坐标",
           number: null,
           name: "C",
-          percent: 80
+          percent: 80,
+          showFlag: true
         },
         {
           x: "SP1坐标",
           number: null,
           name: "SP1",
-          percent: 80
+          percent: 80,
+          showFlag: true
         },
         {
           x: "SP2坐标",
           number: null,
           name: "SP2",
-          percent: 80
+          percent: 80,
+          showFlag: true
         }
       ]
     };
@@ -466,8 +494,17 @@ export default {
       // // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
     },
-    handleSubmit(item) {
-      console.log(item);
+    handleSubmit(item, index) {
+      this.tableList[index].showFlag = !this.tableList[index].showFlag
+      console.log(item, index);
+    },
+    editName(item, index) {
+      console.log(item, index);
+      this.itemParam = item
+      this.dialogVisible = true
+    },
+    handleClose () {
+      console.log(this.itemParam)
     }
   }
 };
@@ -523,5 +560,8 @@ export default {
   position: absolute;
   bottom: 20px;
   right: 27%;
+}
+ .backopt {
+    opacity: 0.3;
 }
 </style>
