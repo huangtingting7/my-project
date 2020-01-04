@@ -114,7 +114,7 @@ export default {
     }
   },
   mounted() {
-    this.$router.push("/equipstatus");
+    // this.$router.push("/equipstatus");
   }
 };
 </script>
