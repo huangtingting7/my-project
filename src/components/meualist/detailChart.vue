@@ -405,8 +405,8 @@ export default {
                 color: [
                   [data.value/30000, '#2d8cf0'],
                   [0.8, '#2d8cf0'],
-                  [0.9, 'yellow'],
-                  [1, 'red']
+                  [0.9, '#e6a23c'],
+                  [1, '#ed4014']
                 ]
               } 
             },
