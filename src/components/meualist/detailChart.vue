@@ -62,10 +62,10 @@
       <div class="title unread" style="display: flex;white-space: nowrap;">
         主轴转速
         <div style="width: 250px;height: 240px;">
-          <div id="myChart3" style="width: 230px;height: 210px;"></div>
+          <div id="myChart3" style="width: 230px;height: 240px;"></div>
         </div>
         <div style="width: 250px;height: 240px;">
-          <div id="myChart4" style="width: 220px;height: 210px;"></div>
+          <div id="myChart4" style="width: 220px;height: 240px;"></div>
         </div>
       </div>
     </div>
@@ -165,7 +165,11 @@ export default {
     }
   },
   methods: {
+    // 倍率1主轴
     getRightBottom() {
+      let data = {
+        value: 100
+      }
       let option = {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -174,12 +178,19 @@ export default {
           {
             max: 120,
             min: 50,
+            color: ["grey", "transparent"],
             splitNumber: 14,
             name: "业务指标",
             type: "gauge",
             //仪表盘轴线相关配置。
             axisLine: {
-              show: true
+              show: true,
+              lineStyle: {       // 属性lineStyle控制线条样式  
+                color: [
+                  [data.value/ 140, '#2d8cf0'],
+                  [1, 'grey']
+                ]
+              } 
             },
             splitLine: {
               show: true
@@ -219,7 +230,7 @@ export default {
                 fontSize: 12
               }
             },
-            data: [{ value: 120, name: "主轴" }]
+            data: [{ value: 100}]
           }
         ]
       };
@@ -227,7 +238,11 @@ export default {
       // // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
     },
+    // 倍率2
     getRightBottom2() {
+      var data = {
+          value: 85.4
+      }
       let option = {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -236,12 +251,19 @@ export default {
           {
             max: 120,
             min: 0,
+            color: ["grey", "transparent"],
             splitNumber: 24,
             name: "业务指标",
             type: "gauge",
             //仪表盘轴线相关配置。
             axisLine: {
-              show: true
+              show: true,
+              lineStyle: {       // 属性lineStyle控制线条样式  
+                color: [
+                  [data.value / 120, '#2d8cf0'],
+                  [1, 'grey']
+                ]
+              } 
             },
             splitLine: {
               show: true
@@ -289,9 +311,9 @@ export default {
               formatter: "{value}%",
               textStyle: {
                 fontSize: 12
-              }
+              },
             },
-            data: [{ value: 120, name: "主轴" }]
+            data: [{ value: 85.4}]
           }
         ]
       };
@@ -300,6 +322,10 @@ export default {
       myChart.setOption(option);
     },
     getRightBottom3() {
+      // 仪表盘所需数据
+      var data = {
+          value: 16297
+      }
       let option = {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -309,6 +335,7 @@ export default {
             max: 30000,
             min: 0,
             splitNumber: 2,
+            color: ["grey", "transparent"],
             name: "业务指标",
             type: "gauge",
             startAngle: 270,
@@ -316,7 +343,13 @@ export default {
             endAngle: 0,
             //仪表盘轴线相关配置。
             axisLine: {
-              show: true
+              show: true,
+              lineStyle: {       // 属性lineStyle控制线条样式  
+                color: [
+                  [data.value / 30000, '#2d8cf0'],
+                  [1, 'grey']
+                ]
+              }  
             },
             splitLine: {
               show: true
@@ -329,6 +362,11 @@ export default {
             axisLabel: {
               show: true,
               distance: -65
+            },
+            pointer: {              // 仪表盘指针。
+                show: false,             // 是否显示指针,默认 true。
+                length: "70%",          // 指针长度，可以是绝对数值，也可以是相对于半径的百分比,默认 80%。
+                width: 5,               // 指针宽度,默认 8。
             },
             detail: {
               formatter: "{value}rpm",
@@ -345,6 +383,9 @@ export default {
       myChart.setOption(option);
     },
     getRightBottom4() {
+      var data = {
+          value: 16297
+      }
       let option = {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -353,12 +394,21 @@ export default {
           {
             max: 30000,
             min: 0,
+            color: ["grey", "transparent"],
             splitNumber: 20,
             name: "业务指标",
             type: "gauge",
             //仪表盘轴线相关配置。
             axisLine: {
-              show: true
+              show: true,
+              lineStyle: {       // 属性lineStyle控制线条样式  
+                color: [
+                  [data.value/30000, '#2d8cf0'],
+                  [0.8, '#2d8cf0'],
+                  [0.9, 'yellow'],
+                  [1, 'red']
+                ]
+              } 
             },
             splitLine: {
               show: true
@@ -370,6 +420,7 @@ export default {
             //刻度标签。
             axisLabel: {
               show: true,
+              color:"black",
               distance: -65,
               formatter: function(value) {
                 switch (value) {
@@ -393,17 +444,13 @@ export default {
                     return ""; //隐藏
                   case 28500:
                     return ""; //隐藏
-                  // case 105:
-                  //     return '';//隐藏
-                  // case 115:
-                  //     return '';//隐藏
                   default:
                     return value;
                 }
               }
             },
             detail: {
-              formatter: "{value}rpm",
+              formatter: '',
               textStyle: {
                 fontSize: 12
               }
@@ -553,14 +600,14 @@ export default {
 }
 .myChart1Title {
   position: absolute;
-  bottom: 20px;
+  bottom: 80px;
   /* text-align: center; */
   left: 20%;
   /* right: 10px; */
 }
 .myChart2Title {
   position: absolute;
-  bottom: 20px;
+  bottom: 80px;
   right: 27%;
 }
 .backopt {
