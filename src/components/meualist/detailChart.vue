@@ -648,7 +648,7 @@ export default {
 .myChart2Title {
   position: absolute;
   bottom: 80px;
-  right: 27%;
+  right: 28%;
 }
 .backopt {
   opacity: 0.3;
